@@ -71,63 +71,6 @@ server.delete('/api/zoos/:id', async (req, res) => {
   }
 });
 
-// BEARS
-server.get('/api/bears', async (req, res) => {
-  try {
-    const bears = await db('bears');
-    res.status(200).json(bears)
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-//GET SINGLE bear
-server.get('/api/bears/:id', async (req, res) => {
-  try {
-    const bear = await db('bears').where({id: req.params.id}).first();
-    res.status(200).json(bear)
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-//CREATE bear
-server.post('/api/bears', async (req, res) => {
-  try {
-    const [id] = await db('bears').insert(req.body);
-    const bear = await db('bears').where({id}).first();
-    res.status(200).json(bear)
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-//UPDATE bear
-server.put('/api/bears/:id', async (req, res) => {
-  try {
-    const count = await db('bears').where({id: req.params.id}).update(req.body);
-    if(count > 0){
-      const bear = await db('bears').where({id: req.params.id}).first();
-      res.status(200).json(bear);
-    }
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-//DELETE bear
-server.delete('/api/bears/:id', async (req, res) => {
-  try {
-    const count = await db('bears').where({id: req.params.id}).del();
-    if(count> 0){
-      res.status(204).end();
-    } else{
-      res.status(404).json({message: "bear not found"})
-    }
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-
-
 
 const port = 3300;
 server.listen(port, function() {

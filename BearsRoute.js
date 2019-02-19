@@ -7,12 +7,11 @@ const knexConfig = {
   },
   useNullAsDefault: true,
 }
-const router = express.Router();
 
 const db = knex(knexConfig);
+const router = express.Router();
 
-
-router.get('/api/bears', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const bears = await db('bears');
       res.status(200).json(bears)
@@ -20,9 +19,8 @@ router.get('/api/bears', async (req, res) => {
       res.status(500).json(error);
     }
   });
-
   //GET SINGLE bear
-  router.get('/api/bears/:id', async (req, res) => {
+  router.get('/:id', async (req, res) => {
     try {
       const bear = await db('bears').where({id: req.params.id}).first();
       res.status(200).json(bear)
@@ -31,7 +29,7 @@ router.get('/api/bears', async (req, res) => {
     }
   });
   //CREATE bear
-  router.post('/api/bears', async (req, res) => {
+  router.post('/', async (req, res) => {
     try {
       const [id] = await db('bears').insert(req.body);
       const bear = await db('bears').where({id}).first();
@@ -41,7 +39,7 @@ router.get('/api/bears', async (req, res) => {
     }
   });
   //UPDATE bear
-  router.put('/api/bears/:id', async (req, res) => {
+  router.put('/:id', async (req, res) => {
     try {
       const count = await db('bears').where({id: req.params.id}).update(req.body);
       if(count > 0){
@@ -53,7 +51,7 @@ router.get('/api/bears', async (req, res) => {
     }
   });
   //DELETE bear
-  router.delete('/api/bears/:id', async (req, res) => {
+  router.delete('/:id', async (req, res) => {
     try {
       const count = await db('bears').where({id: req.params.id}).del();
       if(count> 0){
