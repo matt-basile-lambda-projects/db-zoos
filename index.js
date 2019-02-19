@@ -45,6 +45,17 @@ server.post('/api/zoos', async (req, res) => {
   }
 });
 //UPDATE ZOO
+server.put('/api/zoos/:id', async (req, res) => {
+  try {
+    const count = await db('zoos').where({id: req.params.id}).update(req.body);
+    if(count > 0){
+      const zoo = await db('zoos').where({id: req.params.id}).first();
+      res.status(200).json(zoo);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //DELETE ZOO
 //
 
