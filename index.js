@@ -57,7 +57,19 @@ server.put('/api/zoos/:id', async (req, res) => {
   }
 });
 //DELETE ZOO
-//
+server.delete('/api/zoos/:id', async (req, res) => {
+  try {
+    const count = await db('zoos').where({id: req.params.id}).del();
+    if(count> 0){
+      res.status(204).end();
+    } else{
+      res.status(404).json({message: "Zoo not found"})
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 
 
 
