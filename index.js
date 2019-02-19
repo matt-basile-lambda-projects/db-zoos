@@ -9,12 +9,31 @@ const knexConfig = {
   useNullAsDefault: true,
 }
 const db = knex(knexConfig);
+
 const server = express();
 
 server.use(express.json());
 server.use(helmet());
 
 // endpoints here
+//GET ALL 
+server.get('/api/zoos', async (req, res) => {
+  try {
+    const zoos = await db('zoos');
+    res.status(200).json(zoos)
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+//GET SINGLE ZOO
+//CREATE ZOO
+//UPDATE ZOO
+//DELETE ZOO
+//
+
+
+
+
 
 const port = 3300;
 server.listen(port, function() {
