@@ -26,7 +26,24 @@ server.get('/api/zoos', async (req, res) => {
   }
 });
 //GET SINGLE ZOO
+server.get('/api/zoos/:id', async (req, res) => {
+  try {
+    const zoo = await db('zoos').where({id: req.params.id}).first();
+    res.status(200).json(zoo)
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //CREATE ZOO
+server.post('/api/zoos', async (req, res) => {
+  try {
+    const [id] = await db('zoos').insert(req.body);
+    const zoo = await db('zoos').where({id}).first();
+    res.status(200).json(zoo)
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //UPDATE ZOO
 //DELETE ZOO
 //
